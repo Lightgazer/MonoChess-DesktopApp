@@ -1,1 +1,2 @@
-﻿/MonoChess-DesktopApp/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/SDL2.dll
+﻿/MonoChess-DesktopApp/bin/*
+/MonoChess-DesktopApp/obj/*
