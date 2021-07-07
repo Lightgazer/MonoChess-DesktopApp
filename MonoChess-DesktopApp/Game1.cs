@@ -1,12 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoChess_DesktopApp.Draughts;
 
 namespace MonoChess_DesktopApp
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager _graphics;
+        private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
         public Game1()
@@ -18,16 +19,19 @@ namespace MonoChess_DesktopApp
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            _graphics.PreferredBackBufferHeight = GameSettings.Height;
+            _graphics.PreferredBackBufferWidth = GameSettings.Width;
+            _graphics.ApplyChanges();
 
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
+            SceneManager.AddScene(new DraughtsScene(Content));
+            SceneManager.LoadScene<DraughtsScene>();
+            
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
@@ -36,7 +40,7 @@ namespace MonoChess_DesktopApp
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            SceneManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -45,7 +49,9 @@ namespace MonoChess_DesktopApp
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+            SceneManager.Draw(_spriteBatch);
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
