@@ -16,7 +16,7 @@ namespace MonoChess_DesktopApp.Draughts
         private readonly Texture2D _darkSquareTexture;
         private readonly Texture2D _frameTexture;
 
-        private DraughtsBoard _board;
+        private DraughtsBoardView _boardView;
 
         public DraughtsScene(ContentManager content)
         {
@@ -30,10 +30,11 @@ namespace MonoChess_DesktopApp.Draughts
         public void Start()
         {
             const int boardPx = BoardSize * GameSettings.BlockSize;
-            _board = new DraughtsBoard(_darkSquareTexture, _lightSquareTexture, BoardSize)
+            _boardView = new DraughtsBoardView(_darkSquareTexture, _lightSquareTexture, BoardSize)
             {
                 Position = new Point((GameSettings.Width - boardPx) / 2, (GameSettings.Height - boardPx) / 2)
             };
+            new DraughtsModel();
         }
         
         public void Stop() {}
@@ -44,7 +45,7 @@ namespace MonoChess_DesktopApp.Draughts
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            _board.Draw(spriteBatch);
+            _boardView.Draw(spriteBatch);
         }
     }
 }
