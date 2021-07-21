@@ -3,8 +3,9 @@ using System.Linq;
 
 namespace MonoChess_DesktopApp.Draughts
 {
-    public enum PieceTypes
+    public enum PieceType
     {
+        None,
         WhitePvt,
         BlackPvt,
         WhiteKing,
@@ -18,15 +19,24 @@ namespace MonoChess_DesktopApp.Draughts
         WhiteWin,
         BlackWin
     }
+
+    public enum Turn
+    {
+        White,
+        Black
+    }
     
     public class DraughtsModel
     {
-        private readonly PieceTypes[] _pieces = new PieceTypes[50];
+        public Turn CurrentTurn { get; } = Turn.White;
+        public event Action<DraughtsModel> OnUpdatePositions;
+
+        private readonly PieceType[] _pieces = new PieceType[DraughtsConstants.NumberOfPositions];
 
         public DraughtsModel()
         {
-            Array.Fill(_pieces, PieceTypes.BlackPvt, 0, 20);
-            Array.Fill(_pieces, PieceTypes.WhitePvt, 30, 20);
+            Array.Fill(_pieces, PieceType.BlackPvt, 0, 20);
+            Array.Fill(_pieces, PieceType.WhitePvt, 30, 20);
         }
 
         public Command[] GetPossibleActions(int startPosition)
@@ -39,6 +49,11 @@ namespace MonoChess_DesktopApp.Draughts
         public GameState GetGameState()
         {
             return GameState.Ongoing;
+        }
+
+        public PieceType[] GetPiecePositions()
+        {
+            return _pieces;
         }
     }
 }

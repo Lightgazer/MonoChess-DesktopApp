@@ -8,39 +8,29 @@ namespace MonoChess_DesktopApp.Draughts
     
     internal class DraughtsScene : IScene
     {
-        private const int BoardSize = 10;
-        
-        private readonly Texture2D _blackPieceTexture;
-        private readonly Texture2D _whitePieceTexture;
-        private readonly Texture2D _lightSquareTexture;
-        private readonly Texture2D _darkSquareTexture;
-        private readonly Texture2D _frameTexture;
+        private readonly ContentManager _content;
 
         private DraughtsBoardView _boardView;
+        private DraughtsModel _model;
 
         public DraughtsScene(ContentManager content)
         {
-            _blackPieceTexture = content.Load<Texture2D>("black_piece");
-            _whitePieceTexture = content.Load<Texture2D>("white_piece");
-            _lightSquareTexture = content.Load<Texture2D>("light_square");
-            _darkSquareTexture = content.Load<Texture2D>("dark_square");
-            _frameTexture = content.Load<Texture2D>("frame");
+            _content = content;
         }
 
         public void Start()
         {
-            const int boardPx = BoardSize * GameSettings.BlockSize;
-            _boardView = new DraughtsBoardView(_darkSquareTexture, _lightSquareTexture, BoardSize)
-            {
-                Position = new Point((GameSettings.Width - boardPx) / 2, (GameSettings.Height - boardPx) / 2)
-            };
-            new DraughtsModel();
+            const int boardPx = DraughtsConstants.BoardSize * GameSettings.BlockSize;
+            _model = new DraughtsModel();
+            var position = new Point((GameSettings.Width - boardPx) / 2, (GameSettings.Height - boardPx) / 2);
+            _boardView = new DraughtsBoardView(_content, _model, position);
         }
         
         public void Stop() {}
         
         public void Update(GameTime gameTime)
         {
+            _boardView.Update(gameTime, _model);
         }
 
         public void Draw(SpriteBatch spriteBatch)
