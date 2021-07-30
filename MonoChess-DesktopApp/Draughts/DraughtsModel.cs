@@ -40,7 +40,7 @@ namespace MonoChess_DesktopApp.Draughts
             return _pieces;
         }
 
-        public List<int> GetActivePieces(int position)
+        public List<int> GetActivePieces()
         {
             var currentTurnPieces = CurrentTurn switch
             {
@@ -69,15 +69,15 @@ namespace MonoChess_DesktopApp.Draughts
                 .ToList();
 
             return allowedMoves
-                .Select(GetInitialMovementPosition)
+                .Select(GetStartOfMovement)
                 .Distinct()
                 .ToList();
         }
-        
-        private int GetInitialMovementPosition(Move move) 
+
+        private int GetStartOfMovement(Move move)
         {
             var ret = move;
-            while (move.Parent != null) 
+            while (ret.Parent is { })
                 ret = ret.Parent;
             return ret.Position;
         }

@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoChess-DesktopApp", "MonoChess-DesktopApp\MonoChess-DesktopApp.csproj", "{5D90E84E-8EAB-49E9-8F34-91D4EE73CEED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{DAA197BE-F48A-400A-BCF0-F4D9B61BDD0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{5D90E84E-8EAB-49E9-8F34-91D4EE73CEED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D90E84E-8EAB-49E9-8F34-91D4EE73CEED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D90E84E-8EAB-49E9-8F34-91D4EE73CEED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAA197BE-F48A-400A-BCF0-F4D9B61BDD0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAA197BE-F48A-400A-BCF0-F4D9B61BDD0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAA197BE-F48A-400A-BCF0-F4D9B61BDD0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAA197BE-F48A-400A-BCF0-F4D9B61BDD0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
