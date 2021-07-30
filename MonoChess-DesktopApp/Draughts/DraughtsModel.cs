@@ -4,7 +4,8 @@ using System.Linq;
 
 namespace MonoChess_DesktopApp.Draughts
 {
-    //TODO: нужно как-то связать Turn и PieceType
+    //TODO: нужно как-то связать енамы Turn и PieceType
+    //TODO: рассмотреть выделение CurrentTurn и allowedMoves в отдельный класс
 
     public class DraughtsModel
     {
@@ -69,17 +70,9 @@ namespace MonoChess_DesktopApp.Draughts
                 .ToList();
 
             return allowedMoves
-                .Select(GetStartOfMovement)
+                .Select(move => move.GetStartOfMovement())
                 .Distinct()
                 .ToList();
-        }
-
-        private int GetStartOfMovement(Move move)
-        {
-            var ret = move;
-            while (ret.Parent is { })
-                ret = ret.Parent;
-            return ret.Position;
         }
 
         private int[] SelectPieceIndexes(PieceType[] types) =>

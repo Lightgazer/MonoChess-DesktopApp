@@ -5,7 +5,7 @@ using MonoChess_DesktopApp.Extensions;
 
 namespace MonoChess_DesktopApp.Draughts
 {
-    enum Direction
+    internal enum Direction
     {
         LeftUp,
         LeftDown,
@@ -18,7 +18,7 @@ namespace MonoChess_DesktopApp.Draughts
         public int Position { get; }
         public int Capture { get; set; }
         public PieceType[] Pieces { get; }
-        public Move Parent { get; set; }
+        public Move Parent { get; private set; }
         public int CaptureCount;
         private readonly bool _endFlag;
 
@@ -54,6 +54,9 @@ namespace MonoChess_DesktopApp.Draughts
 
             return listMoves;
         }
+
+        public int GetStartOfMovement() 
+            => Parent?.GetStartOfMovement() ?? Position;
 
         private static int GetNeighbor(int index, Direction direction)
         {
