@@ -18,6 +18,7 @@ namespace MonoChess_DesktopApp.Draughts
         private readonly PieceType[,] _pieces;
         private readonly BoardCursor _cursor;
         private Point? _selectionIndex = null;
+        private readonly DraughtsModel _model;
 
         public DraughtsBoardView(ContentManager content, DraughtsModel model, Point position)
         {
@@ -28,11 +29,11 @@ namespace MonoChess_DesktopApp.Draughts
             _frame = content.Load<Texture2D>("frame");
             _position = position;
             _pieces = new PieceType[Size, Size];
+            _model = model;
             UpdatePositions(model);
-            model.OnUpdatePositions += UpdatePositions;
             var boardRect = new Rectangle(_position, new Point(Size * GameSettings.BlockSize));
             _cursor = new BoardCursor(content, boardRect);
-            _cursor.OnSelect += index => OnPlayerSelect(index, model);
+            _cursor.OnSelect += OnPlayerSelect;
         }
 
         public void Update(GameTime gameTime, DraughtsModel model)
@@ -79,7 +80,7 @@ namespace MonoChess_DesktopApp.Draughts
         }
 
         private Point IndexToPosition(Point index)
-            => _position + (GameSettings.BlockPoint * index);
+            => _position + GameSettings.BlockPoint * index;
 
         private void UpdatePositions(DraughtsModel model)
         {
@@ -100,12 +101,12 @@ namespace MonoChess_DesktopApp.Draughts
             _pieces.ForEach((x, y) => _pieces[x, y] = PieceType.None);
         }
 
-        private void OnPlayerSelect(Point point, DraughtsModel model)
+        private void OnPlayerSelect(Point point)
         {
             if (PointToModelIndex(point) is { } index)
             {
                 _selectionIndex = point;
-                model.GetPossibleActions(index);
+                _model.GetPossibleActions(index);
             }
         }
 

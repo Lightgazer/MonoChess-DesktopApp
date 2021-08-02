@@ -1,6 +1,6 @@
 ﻿namespace MonoChess_DesktopApp.Draughts
 {
-    public enum Turn
+    public enum TurnSide
     {
         White,
         Black
