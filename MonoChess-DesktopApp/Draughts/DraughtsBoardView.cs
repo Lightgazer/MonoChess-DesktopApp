@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoChess_DesktopApp.Extensions;
@@ -28,9 +29,8 @@ namespace MonoChess_DesktopApp.Draughts
             _whitePiece = content.Load<Texture2D>("white_piece");
             _frame = content.Load<Texture2D>("frame");
             _position = position;
-            _pieces = new PieceType[Size, Size];
+            _pieces = ConvertPositions(model.GetPiecePositions());
             _model = model;
-            UpdatePositions(model);
             var boardRect = new Rectangle(_position, new Point(Size * GameSettings.BlockSize));
             _cursor = new BoardCursor(content, boardRect);
             _cursor.OnSelect += OnPlayerSelect;
@@ -48,6 +48,20 @@ namespace MonoChess_DesktopApp.Draughts
             _cursor.Draw(spriteBatch);
         }
 
+        private static PieceType[,] ConvertPositions(IReadOnlyList<PieceType> positions)
+        {
+            var pieces = new PieceType[Size, Size];
+            for (int index = 0; index < positions.Count; index++)
+            {
+                int row = index / RowLength;
+                int colInModel = index % RowLength;
+                int col = colInModel * 2 + (row.IsEven() ? 1 : 0);
+                pieces[col, row] = positions[index];
+            }
+
+            return pieces;
+        }
+
         private void DrawCells(SpriteBatch spriteBatch)
         {
             const int cellsCount = Size * Size;
@@ -63,7 +77,6 @@ namespace MonoChess_DesktopApp.Draughts
 
         private void DrawPieces(SpriteBatch spriteBatch)
         {
-            var blockSize = new Point(GameSettings.BlockSize);
             _pieces.ForEach((type, index) =>
             {
                 var texture = type switch
@@ -74,27 +87,13 @@ namespace MonoChess_DesktopApp.Draughts
                 };
                 if (texture is null) return;
 
-                var position = index * blockSize + _position;
+                var position = IndexToPosition(index);
                 spriteBatch.Draw(texture, position.ToVector2(), Color.White);
             });
         }
 
         private Point IndexToPosition(Point index)
             => _position + GameSettings.BlockPoint * index;
-
-        private void UpdatePositions(DraughtsModel model)
-        {
-            ClearBoard();
-
-            var positions = model.GetPiecePositions();
-            for (int index = 0; index < positions.Length; index++)
-            {
-                int row = index / RowLength;
-                int colInModel = index % RowLength;
-                int col = colInModel * 2 + (row.IsEven() ? 1 : 0);
-                _pieces[col, row] = positions[index];
-            }
-        }
 
         private void ClearBoard()
         {

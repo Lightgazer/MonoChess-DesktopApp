@@ -10,9 +10,6 @@ namespace MonoChess_DesktopApp.Draughts
     {
         private Turn _currentTurn;
 
-        //Passive model? 
-        public event Action<DraughtsModel> OnUpdatePositions;
-
         public DraughtsModel()
         {
             var pieces = new PieceType[DraughtsConstants.NumberOfPositions];
@@ -35,12 +32,12 @@ namespace MonoChess_DesktopApp.Draughts
             return GameState.Ongoing;
         }
 
-        public PieceType[] GetPiecePositions()
+        public IReadOnlyList<PieceType> GetPiecePositions()
         {
             return _currentTurn.Pieces;
         }
 
-        public List<int> GetActivePieces()
+        public IReadOnlyList<int> GetActivePieces()
         {
             return _currentTurn.GetAllowedMoves()
                 .Select(move => move.GetStartOfMovement())
