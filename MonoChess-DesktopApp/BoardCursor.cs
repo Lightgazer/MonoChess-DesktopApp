@@ -26,8 +26,9 @@ namespace MonoChess_DesktopApp
             _hoverIndex = PositionToBoardIndex(mouseState.Position);
 
             var leftButton = mouseState.LeftButton;
-            if (_hoverIndex is {} selected 
-                && _prevButtonState == ButtonState.Released && leftButton == ButtonState.Pressed)
+            if (_hoverIndex is {} selected &&
+                _prevButtonState == ButtonState.Released &&
+                leftButton == ButtonState.Pressed)
             {
                 OnSelect?.Invoke(selected);
             }

@@ -15,11 +15,29 @@ namespace MonoChess_DesktopApp.Draughts
         private readonly Texture2D _darkSquare;
         private readonly Texture2D _whitePiece;
         private readonly Texture2D _blackPiece;
-        private readonly Texture2D _frame;
         private readonly PieceType[,] _pieces;
-        private readonly BoardCursor _cursor;
-        private Point? _selectionIndex = null;
         private readonly DraughtsModel _model;
+        private IDraughtsBoardState _state;
+
+        public static int? PointToSquareNumber(Point index)
+        {
+            var (x, y) = index;
+            if (y.IsEven() && !x.IsEven() || !y.IsEven() && x.IsEven())
+            {
+                int col = (x.IsEven() ? x : x + 1) / 2;
+                return y * DraughtsConstants.RowLength + col;
+            }
+
+            return null;
+        }
+
+        public static Point SquareNumberToPoint(int number)
+        {
+            int row = number / RowLength;
+            int colInModel = number % RowLength;
+            int col = colInModel * 2 + (row.IsEven() ? 1 : 0);
+            return new Point(col, row);
+        }
 
         public DraughtsBoardView(ContentManager content, DraughtsModel model, Point position)
         {
@@ -27,36 +45,44 @@ namespace MonoChess_DesktopApp.Draughts
             _lightSquare = content.Load<Texture2D>("light_square");
             _blackPiece = content.Load<Texture2D>("black_piece");
             _whitePiece = content.Load<Texture2D>("white_piece");
-            _frame = content.Load<Texture2D>("frame");
             _position = position;
             _pieces = ConvertPositions(model.GetPiecePositions());
             _model = model;
-            var boardRect = new Rectangle(_position, new Point(Size * GameSettings.BlockSize));
-            _cursor = new BoardCursor(content, boardRect);
-            _cursor.OnSelect += OnPlayerSelect;
+            _state = new PieceSelectionState(content, this);
+            _state.Init(_model);
         }
 
-        public void Update(GameTime gameTime, DraughtsModel model)
+        public Rectangle GetScreenRectangle()
+            => new Rectangle(_position, new Point(Size * GameSettings.BlockSize));
+
+        public void Update(GameTime gameTime)
         {
-            _cursor.Update();
+            _state.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             DrawCells(spriteBatch);
             DrawPieces(spriteBatch);
-            _cursor.Draw(spriteBatch);
+            _state.Draw(spriteBatch);
         }
+
+        public void TransitionTo(IDraughtsBoardState state)
+        {
+            _state = state;
+            _state.Init(_model);
+        }
+
+        public Point PointToScreenPosition(Point index) 
+            => _position + GameSettings.BlockPoint * index;
 
         private static PieceType[,] ConvertPositions(IReadOnlyList<PieceType> positions)
         {
             var pieces = new PieceType[Size, Size];
             for (int index = 0; index < positions.Count; index++)
             {
-                int row = index / RowLength;
-                int colInModel = index % RowLength;
-                int col = colInModel * 2 + (row.IsEven() ? 1 : 0);
-                pieces[col, row] = positions[index];
+                var (x, y) = SquareNumberToPoint(index);
+                pieces[x, y] = positions[index];
             }
 
             return pieces;
@@ -87,38 +113,14 @@ namespace MonoChess_DesktopApp.Draughts
                 };
                 if (texture is null) return;
 
-                var position = IndexToPosition(index);
+                var position = PointToScreenPosition(index);
                 spriteBatch.Draw(texture, position.ToVector2(), Color.White);
             });
         }
 
-        private Point IndexToPosition(Point index)
-            => _position + GameSettings.BlockPoint * index;
-
         private void ClearBoard()
         {
             _pieces.ForEach((x, y) => _pieces[x, y] = PieceType.None);
-        }
-
-        private void OnPlayerSelect(Point point)
-        {
-            if (PointToModelIndex(point) is { } index)
-            {
-                _selectionIndex = point;
-                _model.GetPossibleActions(index);
-            }
-        }
-
-        private int? PointToModelIndex(Point index)
-        {
-            var (x, y) = index;
-            if (y.IsEven() && !x.IsEven() || !y.IsEven() && x.IsEven())
-            {
-                int col = (x.IsEven() ? x : x + 1) / 2;
-                return y * DraughtsConstants.RowLength + col;
-            }
-
-            return null;
         }
     }
 }

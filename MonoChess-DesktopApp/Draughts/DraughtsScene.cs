@@ -30,7 +30,7 @@ namespace MonoChess_DesktopApp.Draughts
         
         public void Update(GameTime gameTime)
         {
-            _boardView.Update(gameTime, _model);
+            _boardView.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
