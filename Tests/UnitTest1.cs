@@ -26,5 +26,23 @@ namespace Tests
             var expected = new List<int> {30, 31, 32, 33, 34};
             CollectionAssert.AreEqual(active, expected);
         }
+
+        [Test]
+        public void PossibleActionsAtBeginning()
+        {
+            var model = new DraughtsModel();
+            var commands = model.GetPossibleActions(30);
+            Assert.AreEqual(commands.Count, 2);
+            Assert.AreEqual(commands[0].EndPosition, 25);
+            Assert.AreEqual(commands[1].EndPosition, 26);
+        }
+
+        [Test]
+        public void ImpossibleActionsAtBeginning()
+        {
+            var model = new DraughtsModel();
+            var commands = model.GetPossibleActions(25);
+            Assert.AreEqual(commands.Count, 0);
+        }
     }
 }

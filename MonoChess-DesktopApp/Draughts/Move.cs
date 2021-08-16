@@ -13,7 +13,7 @@ namespace MonoChess_DesktopApp.Draughts
         RightDown
     }
     
-    internal class Move
+    public class Move
     {
         public int Position { get; }
         public int Capture { get; set; }

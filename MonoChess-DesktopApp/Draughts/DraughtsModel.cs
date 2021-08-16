@@ -18,9 +18,12 @@ namespace MonoChess_DesktopApp.Draughts
             _currentTurn = new Turn(pieces, TurnSide.White);
         }
 
-        public Command[] GetPossibleActions(int startPosition)
+        public List<Command> GetPossibleActions(int startPosition)
         {
-            return null;
+            return _currentTurn.GetAllowedMoves()
+                .FindAll(move => move.GetStartOfMovement() == startPosition)
+                .Select(move => new Command(move))
+                .ToList();
         }
 
         public void Execute(Command action)

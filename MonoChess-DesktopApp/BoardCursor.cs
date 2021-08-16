@@ -9,9 +9,11 @@ namespace MonoChess_DesktopApp
     public class BoardCursor
     {
         public Action<Point> OnSelect;
+        public Action OnCancel;
         private readonly Texture2D _texture;
         private Rectangle _target;
-        private ButtonState _prevButtonState;
+        private ButtonState _prevLeftButtonState;
+        private ButtonState _prevRightButtonState;
         private Point? _hoverIndex;
 
         public BoardCursor(ContentManager content, Rectangle target)
@@ -27,13 +29,17 @@ namespace MonoChess_DesktopApp
 
             var leftButton = mouseState.LeftButton;
             if (_hoverIndex is {} selected &&
-                _prevButtonState == ButtonState.Released &&
+                _prevLeftButtonState == ButtonState.Released &&
                 leftButton == ButtonState.Pressed)
             {
                 OnSelect?.Invoke(selected);
             }
+            _prevLeftButtonState = leftButton;
 
-            _prevButtonState = leftButton;
+            var rightButton = mouseState.RightButton;
+            if (_prevRightButtonState == ButtonState.Pressed && rightButton == ButtonState.Released)
+                OnCancel?.Invoke();
+            _prevRightButtonState = rightButton;
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -45,7 +45,7 @@ namespace MonoChess_DesktopApp.Draughts
 
         private void OnSelect(Point point)
         {
-            if (DraughtsBoardView.PointToSquareNumber(point) is { } index)
+            if (DraughtsBoardView.PointToSquareNumber(point) is { } index && _activePositions.Contains(point))
             {
                 var newState = new ActionSelectionState(_content, _context, index);
                 _context.TransitionTo(newState);
