@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/frame.png</SourceFile>
-  <SourceTime>2021-07-07T14:54:02.2701765+10:00</SourceTime>
+  <SourceTime>2021-08-18T14:18:48.8716431+10:00</SourceTime>
   <DestFile>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/bin/DesktopGL/Content/frame.xnb</DestFile>
-  <DestTime>2021-07-07T16:07:08.9589025+10:00</DestTime>
+  <DestTime>2021-08-18T14:21:19.4561573+10:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T16:17:54+10:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

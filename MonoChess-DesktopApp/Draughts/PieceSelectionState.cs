@@ -1,64 +1,26 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MonoChess_DesktopApp.Draughts
 {
-    class PieceSelectionState : IDraughtsBoardState
+    internal class PieceSelectionState : SelectionState, IDraughtsBoardState
     {
-        private readonly DraughtsBoardView _context;
-        private readonly BoardCursor _cursor;
-        private readonly ContentManager _content;
-        private readonly Texture2D _frame;
-        private Point[] _activePositions;
-
-        public PieceSelectionState(ContentManager content, DraughtsBoardView context)
-        {
-            _context = context;
-            _content = content;
-            _frame = content.Load<Texture2D>("frame");
-            _cursor = new BoardCursor(content, context.GetScreenRectangle());
-            _cursor.OnSelect += OnSelect;
-        }
+        public PieceSelectionState(ContentManager content, DraughtsBoardView context) : base(content, context) { }
 
         public void Init(DraughtsModel model)
         {
             _activePositions = CalculateActivePositions(model.GetActivePieces());
         }
 
-        public void Update(GameTime gameTime)
+        protected override void OnValidSelection(Point index)
         {
-            _cursor.Update();
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            DrawActivePositions(spriteBatch);
-            _cursor.Draw(spriteBatch);
+            var newState = new ActionSelectionState(_content, _context, index.GetIndex());
+            _context.TransitionTo(newState);
         }
 
         private static Point[] CalculateActivePositions(IReadOnlyList<int> squares)
-            => squares.Select(square => DraughtsBoardView.SquareNumberToPoint(square)).ToArray();
-
-
-        private void OnSelect(Point point)
-        {
-            if (DraughtsBoardView.PointToSquareNumber(point) is { } index && _activePositions.Contains(point))
-            {
-                var newState = new ActionSelectionState(_content, _context, index);
-                _context.TransitionTo(newState);
-            }
-        }
-
-        private void DrawActivePositions(SpriteBatch spriteBatch)
-        {
-            foreach(var point in _activePositions)
-            {
-                var screenPosition = _context.PointToScreenPosition(point);
-                spriteBatch.Draw(_frame, screenPosition.ToVector2(), Color.White);
-            }
-        }
+            => squares.Select(square => DraughtsBoardView.PointFromSquareNumber(square)).ToArray();
     }
 }

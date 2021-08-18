@@ -19,19 +19,7 @@ namespace MonoChess_DesktopApp.Draughts
         private readonly DraughtsModel _model;
         private IDraughtsBoardState _state;
 
-        public static int? PointToSquareNumber(Point index)
-        {
-            var (x, y) = index;
-            if (y.IsEven() && !x.IsEven() || !y.IsEven() && x.IsEven())
-            {
-                int col = (x.IsEven() ? x : x + 1) / 2;
-                return y * DraughtsConstants.RowLength + col;
-            }
-
-            return null;
-        }
-
-        public static Point SquareNumberToPoint(int number)
+        public static Point PointFromSquareNumber(int number)
         {
             int row = number / RowLength;
             int colInModel = number % RowLength;
@@ -81,7 +69,7 @@ namespace MonoChess_DesktopApp.Draughts
             var pieces = new PieceType[Size, Size];
             for (int index = 0; index < positions.Count; index++)
             {
-                var (x, y) = SquareNumberToPoint(index);
+                var (x, y) = PointFromSquareNumber(index);
                 pieces[x, y] = positions[index];
             }
 

@@ -31,7 +31,7 @@ namespace Tests
         public void PossibleActionsAtBeginning()
         {
             var model = new DraughtsModel();
-            var commands = model.GetPossibleActions(30);
+            var commands = model.GetPossibleCommands(30);
             Assert.AreEqual(commands.Count, 2);
             Assert.AreEqual(commands[0].EndPosition, 25);
             Assert.AreEqual(commands[1].EndPosition, 26);
@@ -41,7 +41,7 @@ namespace Tests
         public void ImpossibleActionsAtBeginning()
         {
             var model = new DraughtsModel();
-            var commands = model.GetPossibleActions(25);
+            var commands = model.GetPossibleCommands(25);
             Assert.AreEqual(commands.Count, 0);
         }
     }
