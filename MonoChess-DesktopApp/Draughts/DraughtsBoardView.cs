@@ -6,6 +6,13 @@ using MonoChess_DesktopApp.Extensions;
 
 namespace MonoChess_DesktopApp.Draughts
 {
+    internal struct Piece
+    {
+        public Point BoardIndex;
+        public Point ScreenDisplacement;
+        public PieceType Type;
+    }
+
     public class DraughtsBoardView
     {
         private const int Size = DraughtsConstants.BoardSize;
@@ -15,7 +22,7 @@ namespace MonoChess_DesktopApp.Draughts
         private readonly Texture2D _darkSquare;
         private readonly Texture2D _whitePiece;
         private readonly Texture2D _blackPiece;
-        private readonly PieceType[,] _pieces;
+        private readonly List<Piece> _pieces;
         private readonly DraughtsModel _model;
         private IDraughtsBoardState _state;
 
@@ -64,13 +71,15 @@ namespace MonoChess_DesktopApp.Draughts
         public Point PointToScreenPosition(Point index) 
             => _position + GameSettings.BlockPoint * index;
 
-        private static PieceType[,] ConvertPositions(IReadOnlyList<PieceType> positions)
+        private static List<Piece> ConvertPositions(IReadOnlyList<PieceType> positions)
         {
-            var pieces = new PieceType[Size, Size];
+            var pieces = new List<Piece>();
             for (int index = 0; index < positions.Count; index++)
             {
-                var (x, y) = PointFromSquareNumber(index);
-                pieces[x, y] = positions[index];
+                var type = positions[index];
+                if (type == PieceType.None) continue;
+                var piece = new Piece { BoardIndex = PointFromSquareNumber(index), Type = type };
+                pieces.Add(piece);
             }
 
             return pieces;
@@ -91,9 +100,8 @@ namespace MonoChess_DesktopApp.Draughts
 
         private void DrawPieces(SpriteBatch spriteBatch)
         {
-            _pieces.ForEach((type, index) =>
-            {
-                var texture = type switch
+            _pieces.ForEach(piece => {
+                var texture = piece.Type switch
                 {
                     PieceType.BlackPvt => _blackPiece,
                     PieceType.WhitePvt => _whitePiece,
@@ -101,14 +109,9 @@ namespace MonoChess_DesktopApp.Draughts
                 };
                 if (texture is null) return;
 
-                var position = PointToScreenPosition(index);
+                var position = PointToScreenPosition(piece.BoardIndex);
                 spriteBatch.Draw(texture, position.ToVector2(), Color.White);
             });
-        }
-
-        private void ClearBoard()
-        {
-            _pieces.ForEach((x, y) => _pieces[x, y] = PieceType.None);
         }
     }
 }

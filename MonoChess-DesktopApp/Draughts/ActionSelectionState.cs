@@ -10,7 +10,7 @@ namespace MonoChess_DesktopApp.Draughts
         private readonly int _index;
         private List<Command> _commands;
 
-        public ActionSelectionState(ContentManager content, DraughtsBoardView context, int index) : base (content, context)
+        public ActionSelectionState(ContentManager content, DraughtsBoardView context, int index) : base(content, context)
         {
             _cursor.OnCancel += OnCancel;
             _index = index;
@@ -31,7 +31,7 @@ namespace MonoChess_DesktopApp.Draughts
             => commands.Select(command => DraughtsBoardView.PointFromSquareNumber(command.EndPosition)).ToArray();
 
 
-        private void OnCancel() 
+        private void OnCancel()
         {
             _context.TransitionTo(new PieceSelectionState(_content, _context));
         }

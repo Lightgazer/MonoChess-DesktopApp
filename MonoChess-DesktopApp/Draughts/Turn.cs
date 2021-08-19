@@ -26,8 +26,8 @@ namespace MonoChess_DesktopApp.Draughts
         {
             var currentTurnPieces = Side switch
             {
-                TurnSide.White => SelectPieceIndexes(new[] {PieceType.WhitePvt, PieceType.WhiteKing}),
-                TurnSide.Black => SelectPieceIndexes(new[] {PieceType.BlackPvt, PieceType.BlackKing}),
+                TurnSide.White => SelectPieceIndexes(new[] { PieceType.WhitePvt, PieceType.WhiteKing }),
+                TurnSide.Black => SelectPieceIndexes(new[] { PieceType.BlackPvt, PieceType.BlackKing }),
                 _ => throw new ArgumentOutOfRangeException()
             };
             var movesList = currentTurnPieces

@@ -23,8 +23,8 @@ namespace MonoChess_DesktopApp
 
         public static void LoadScene(int index)
         {
-            if (Scenes.ElementAtOrDefault(index) is { } scene)
-                LoadScene(scene);
+            var scene = Scenes.ElementAtOrDefault(index);
+            LoadScene(scene);
         }
 
         public static void Update(GameTime gameTime)
@@ -36,12 +36,15 @@ namespace MonoChess_DesktopApp
         {
             CurrentScene.Draw(spriteBatch);
         }
-        
+
         private static void LoadScene(IScene scene)
         {
-            CurrentScene?.Stop();
-            CurrentScene = scene;
-            CurrentScene.Start();
+            if (scene is { })
+            {
+                CurrentScene?.Stop();
+                CurrentScene = scene;
+                CurrentScene.Start();
+            }
         }
     }
 }
