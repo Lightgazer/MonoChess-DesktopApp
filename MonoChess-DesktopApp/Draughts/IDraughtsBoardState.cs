@@ -6,7 +6,6 @@ namespace MonoChess_DesktopApp.Draughts
 {
     public interface IDraughtsBoardState
     {
-        void Init(DraughtsModel model);
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
     }

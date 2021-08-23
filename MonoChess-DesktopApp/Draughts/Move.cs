@@ -4,18 +4,10 @@ using System.Linq;
 using MonoChess_DesktopApp.Extensions;
 
 namespace MonoChess_DesktopApp.Draughts
-{
-    internal enum Direction
-    {
-        LeftUp,
-        LeftDown,
-        RightUp,
-        RightDown
-    }
-    
+{   
     public class Move
     {
-        public int Position { get; }
+        public int ToPosition { get; }
         public int Capture { get; set; }
         public PieceType[] Pieces { get; }
         public Move Parent { get; private set; }
@@ -24,7 +16,7 @@ namespace MonoChess_DesktopApp.Draughts
 
         public Move(int position, PieceType[] pieces, bool endFlag)
         {
-            Position = position;
+            ToPosition = position;
             Pieces = pieces;
             _endFlag = endFlag;
         }
@@ -36,18 +28,18 @@ namespace MonoChess_DesktopApp.Draughts
             
             foreach (var direction in (Direction[]) Enum.GetValues(typeof(Direction)))
             {
-                var neighbor = GetNeighbor(Position, direction);
+                var neighbor = GetNeighbor(ToPosition, direction);
                 if (neighbor == -1) continue;
                 if (Pieces[neighbor] == PieceType.None && CaptureCount == 0)
                 {
-                    listMoves.Add(MovePiece(Position, neighbor));
+                    listMoves.Add(MovePiece(ToPosition, neighbor));
                 }
                 else
                 {
                     var secondNeighbor = GetNeighbor(neighbor, Direction.LeftUp);
                     if (secondNeighbor != -1 && Pieces[secondNeighbor] == PieceType.None && IsEnemy(neighbor))
                     {
-                        listMoves.Add(CapturePiece(Position, secondNeighbor, neighbor));
+                        listMoves.Add(CapturePiece(ToPosition, secondNeighbor, neighbor));
                     }
                 }
             }
@@ -56,7 +48,7 @@ namespace MonoChess_DesktopApp.Draughts
         }
 
         public int GetStartOfMovement() 
-            => Parent?.GetStartOfMovement() ?? Position;
+            => Parent?.GetStartOfMovement() ?? ToPosition;
 
         private static int GetNeighbor(int index, Direction direction)
         {
@@ -107,7 +99,7 @@ namespace MonoChess_DesktopApp.Draughts
 
         private bool IsEnemy(int index)
         {
-            var current = Pieces[Position];
+            var current = Pieces[ToPosition];
             var target = Pieces[index];
             var blackSide = new[] {PieceType.WhitePvt, PieceType.WhiteKing};
             var whiteSide = new[] {PieceType.BlackPvt, PieceType.BlackKing};

@@ -8,5 +8,6 @@ namespace MonoChess_DesktopApp
         public const int Height = 700;
         public const int BlockSize = 64;
         public static Point BlockPoint = new Point(BlockSize);
+        public static float MovementSpeed = 1f;
     }
 }

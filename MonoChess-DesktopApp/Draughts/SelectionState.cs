@@ -8,8 +8,8 @@ namespace MonoChess_DesktopApp.Draughts
     abstract internal class SelectionState
     {
         protected readonly DraughtsBoardView _context;
-        protected readonly BoardCursor _cursor;
         protected readonly ContentManager _content;
+        protected readonly BoardCursor _cursor;
         protected readonly Texture2D _frame;
         protected Point[] _activePositions;
 
@@ -33,7 +33,7 @@ namespace MonoChess_DesktopApp.Draughts
             _cursor.Draw(spriteBatch);
         }
 
-        protected abstract void OnValidSelection(Point index);
+        protected abstract void OnValidSelection(Point point);
 
         private void OnSelect(Point point)
         {

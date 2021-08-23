@@ -6,15 +6,17 @@ using MonoChess_DesktopApp.Extensions;
 
 namespace MonoChess_DesktopApp.Draughts
 {
-    internal struct Piece
+    internal class Piece
     {
         public Point BoardIndex;
-        public Point ScreenDisplacement;
+        public Vector2 ScreenDisplacement;
         public PieceType Type;
     }
 
     public class DraughtsBoardView
     {
+        internal List<Piece> Pieces { get; private set; }
+        internal DraughtsModel Model { get; private set; }
         private const int Size = DraughtsConstants.BoardSize;
         private const int RowLength = DraughtsConstants.RowLength;
         private readonly Point _position;
@@ -22,11 +24,9 @@ namespace MonoChess_DesktopApp.Draughts
         private readonly Texture2D _darkSquare;
         private readonly Texture2D _whitePiece;
         private readonly Texture2D _blackPiece;
-        private readonly List<Piece> _pieces;
-        private readonly DraughtsModel _model;
         private IDraughtsBoardState _state;
 
-        public static Point PointFromSquareNumber(int number)
+        public static Point SquareNumberToPoint(int number)
         {
             int row = number / RowLength;
             int colInModel = number % RowLength;
@@ -41,10 +41,9 @@ namespace MonoChess_DesktopApp.Draughts
             _blackPiece = content.Load<Texture2D>("black_piece");
             _whitePiece = content.Load<Texture2D>("white_piece");
             _position = position;
-            _pieces = ConvertPositions(model.GetPiecePositions());
-            _model = model;
+            Pieces = ConvertPositions(model.GetPiecePositions());
+            Model = model;
             _state = new PieceSelectionState(content, this);
-            _state.Init(_model);
         }
 
         public Rectangle GetScreenRectangle()
@@ -65,7 +64,6 @@ namespace MonoChess_DesktopApp.Draughts
         public void TransitionTo(IDraughtsBoardState state)
         {
             _state = state;
-            _state.Init(_model);
         }
 
         public Point PointToScreenPosition(Point index) 
@@ -78,7 +76,7 @@ namespace MonoChess_DesktopApp.Draughts
             {
                 var type = positions[index];
                 if (type == PieceType.None) continue;
-                var piece = new Piece { BoardIndex = PointFromSquareNumber(index), Type = type };
+                var piece = new Piece { BoardIndex = SquareNumberToPoint(index), Type = type };
                 pieces.Add(piece);
             }
 
@@ -100,7 +98,7 @@ namespace MonoChess_DesktopApp.Draughts
 
         private void DrawPieces(SpriteBatch spriteBatch)
         {
-            _pieces.ForEach(piece => {
+            Pieces.ForEach(piece => {
                 var texture = piece.Type switch
                 {
                     PieceType.BlackPvt => _blackPiece,
@@ -109,8 +107,8 @@ namespace MonoChess_DesktopApp.Draughts
                 };
                 if (texture is null) return;
 
-                var position = PointToScreenPosition(piece.BoardIndex);
-                spriteBatch.Draw(texture, position.ToVector2(), Color.White);
+                var position = PointToScreenPosition(piece.BoardIndex).ToVector2() + piece.ScreenDisplacement;
+                spriteBatch.Draw(texture, position, Color.White);
             });
         }
     }

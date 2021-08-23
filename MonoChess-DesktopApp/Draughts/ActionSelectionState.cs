@@ -7,28 +7,23 @@ namespace MonoChess_DesktopApp.Draughts
 {
     internal class ActionSelectionState : SelectionState, IDraughtsBoardState
     {
-        private readonly int _index;
         private List<Command> _commands;
 
         public ActionSelectionState(ContentManager content, DraughtsBoardView context, int index) : base(content, context)
         {
             _cursor.OnCancel += OnCancel;
-            _index = index;
-        }
-
-        public void Init(DraughtsModel model)
-        {
-            _commands = model.GetPossibleCommands(_index);
+            _commands = context.Model.GetPossibleCommands(index);
             _activePositions = CalculateActivePositions(_commands);
         }
 
-        protected override void OnValidSelection(Point index)
+        protected override void OnValidSelection(Point point)
         {
-            var command = _commands.Find(command => command.EndPosition == index.GetIndex());
+            var command = _commands.Find(command => command.EndPosition == point.GetIndex());
+            _context.TransitionTo(new PieceMovementState(_content, _context, command));
         }
 
         private static Point[] CalculateActivePositions(List<Command> commands)
-            => commands.Select(command => DraughtsBoardView.PointFromSquareNumber(command.EndPosition)).ToArray();
+            => commands.Select(command => DraughtsBoardView.SquareNumberToPoint(command.EndPosition)).ToArray();
 
 
         private void OnCancel()

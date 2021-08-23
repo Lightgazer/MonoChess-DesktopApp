@@ -4,7 +4,7 @@ namespace MonoChess_DesktopApp.Draughts
 {
     public class Command
     {
-        public int EndPosition { get { return _endMove.Position; } }
+        public int EndPosition { get { return _endMove.ToPosition; } }
         private Move _endMove;
 
         public Command(Move endMove)
@@ -12,9 +12,16 @@ namespace MonoChess_DesktopApp.Draughts
             _endMove = endMove;
         }
 
-        public List<Move> GetAllMoves()
+        public Stack<Move> GetAllMoves()
         {
-            return null;
+            var list = new Stack<Move>();
+            var move = _endMove;
+            while (move is { })
+            {
+                list.Push(move);
+                move = move.Parent;
+            }
+            return list;
         }
     }
 }
