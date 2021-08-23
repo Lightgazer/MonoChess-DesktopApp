@@ -5,6 +5,7 @@ using System.Linq;
 namespace MonoChess_DesktopApp.Draughts
 {
     //TODO: нужно как-то связать енамы Turn и PieceType
+    //TODO: проверка на конец игры, ничью
 
     public class DraughtsModel
     {
@@ -26,8 +27,10 @@ namespace MonoChess_DesktopApp.Draughts
                 .ToList();
         }
 
-        public void Execute(Command action)
+        public void Execute(Command command)
         {
+            var nextSide = _currentTurn.Side == TurnSide.White ? TurnSide.Black : TurnSide.White;
+            _currentTurn = new Turn(command.EndPieces, nextSide);
         }
 
         public GameState GetGameState()

@@ -15,7 +15,7 @@ namespace MonoChess_DesktopApp.Draughts
         protected override void OnValidSelection(Point point)
         {
             var newState = new ActionSelectionState(_content, _context, point.GetIndex());
-            _context.TransitionTo(newState);
+            _context.State = newState;
         }
 
         private static Point[] CalculateActivePositions(IReadOnlyList<int> squares)

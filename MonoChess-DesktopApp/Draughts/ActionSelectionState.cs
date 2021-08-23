@@ -19,7 +19,7 @@ namespace MonoChess_DesktopApp.Draughts
         protected override void OnValidSelection(Point point)
         {
             var command = _commands.Find(command => command.EndPosition == point.GetIndex());
-            _context.TransitionTo(new PieceMovementState(_content, _context, command));
+            _context.State = new PieceMovementState(_content, _context, command);
         }
 
         private static Point[] CalculateActivePositions(List<Command> commands)
@@ -28,7 +28,7 @@ namespace MonoChess_DesktopApp.Draughts
 
         private void OnCancel()
         {
-            _context.TransitionTo(new PieceSelectionState(_content, _context));
+            _context.State = new PieceSelectionState(_content, _context);
         }
     }
 }

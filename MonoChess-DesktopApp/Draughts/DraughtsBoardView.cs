@@ -17,6 +17,7 @@ namespace MonoChess_DesktopApp.Draughts
     {
         internal List<Piece> Pieces { get; private set; }
         internal DraughtsModel Model { get; private set; }
+        internal IDraughtsBoardState State { private get; set; }
         private const int Size = DraughtsConstants.BoardSize;
         private const int RowLength = DraughtsConstants.RowLength;
         private readonly Point _position;
@@ -24,7 +25,6 @@ namespace MonoChess_DesktopApp.Draughts
         private readonly Texture2D _darkSquare;
         private readonly Texture2D _whitePiece;
         private readonly Texture2D _blackPiece;
-        private IDraughtsBoardState _state;
 
         public static Point SquareNumberToPoint(int number)
         {
@@ -43,7 +43,7 @@ namespace MonoChess_DesktopApp.Draughts
             _position = position;
             Pieces = ConvertPositions(model.GetPiecePositions());
             Model = model;
-            _state = new PieceSelectionState(content, this);
+            State = new PieceSelectionState(content, this);
         }
 
         public Rectangle GetScreenRectangle()
@@ -51,19 +51,14 @@ namespace MonoChess_DesktopApp.Draughts
 
         public void Update(GameTime gameTime)
         {
-            _state.Update(gameTime);
+            State.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             DrawCells(spriteBatch);
             DrawPieces(spriteBatch);
-            _state.Draw(spriteBatch);
-        }
-
-        public void TransitionTo(IDraughtsBoardState state)
-        {
-            _state = state;
+            State.Draw(spriteBatch);
         }
 
         public Point PointToScreenPosition(Point index) 
