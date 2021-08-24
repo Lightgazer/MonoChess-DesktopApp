@@ -44,5 +44,37 @@ namespace Tests
             var commands = model.GetPossibleCommands(25);
             Assert.AreEqual(commands.Count, 0);
         }
+
+        [Test]
+        public void ExecuteCommand()
+        {
+            var model = new DraughtsModel();
+            var commands = model.GetPossibleCommands(30);
+            var leftCommand = commands[0];
+            model.Execute(leftCommand);
+            var active = model.GetActivePieces();
+            var expected = new List<int> { 15, 16, 17, 18, 19 };
+            CollectionAssert.AreEqual(active, expected);
+        }
+
+        [Test]
+        public void CapturePiece()
+        {
+            var model = new DraughtsModel();
+            var commands = model.GetPossibleCommands(30);
+            model.Execute(commands[1]);
+            var commands2 = model.GetPossibleCommands(15);
+            model.Execute(commands2[0]);
+
+            var active = model.GetActivePieces();
+            var expected = new List<int> { 26 };
+            CollectionAssert.AreEqual(active, expected);
+
+            var commands3 = model.GetPossibleCommands(26);
+            model.Execute(commands3[0]);
+
+            var positions = model.GetPiecePositions();
+            Assert.AreEqual(positions[15], PieceType.WhitePvt);
+        }
     }
 }
