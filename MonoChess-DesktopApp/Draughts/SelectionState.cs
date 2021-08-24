@@ -8,15 +8,14 @@ namespace MonoChess_DesktopApp.Draughts
     abstract internal class SelectionState
     {
         protected readonly DraughtsBoardView _context;
-        protected readonly ContentManager _content;
         protected readonly BoardCursor _cursor;
         protected readonly Texture2D _frame;
         protected Point[] _activePositions;
 
-        public SelectionState(ContentManager content, DraughtsBoardView context)
+        public SelectionState(DraughtsBoardView context)
         {
             _context = context;
-            _content = content;
+            var content = context.Content;
             _frame = content.Load<Texture2D>("frame");
             _cursor = new BoardCursor(content, context.GetScreenRectangle());
             _cursor.OnSelect += OnSelect;

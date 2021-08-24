@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +8,7 @@ namespace MonoChess_DesktopApp.Draughts
     {
         private List<Command> _commands;
 
-        public ActionSelectionState(ContentManager content, DraughtsBoardView context, int index) : base(content, context)
+        public ActionSelectionState(DraughtsBoardView context, int index) : base(context)
         {
             _cursor.OnCancel += OnCancel;
             _commands = context.Model.GetPossibleCommands(index);
@@ -19,7 +18,7 @@ namespace MonoChess_DesktopApp.Draughts
         protected override void OnValidSelection(Point point)
         {
             var command = _commands.Find(command => command.EndPosition == point.GetIndex());
-            _context.State = new PieceMovementState(_content, _context, command);
+            _context.State = new PieceMovementState(_context, command);
         }
 
         private static Point[] CalculateActivePositions(List<Command> commands)
@@ -28,7 +27,7 @@ namespace MonoChess_DesktopApp.Draughts
 
         private void OnCancel()
         {
-            _context.State = new PieceSelectionState(_content, _context);
+            _context.State = new PieceSelectionState(_context);
         }
     }
 }

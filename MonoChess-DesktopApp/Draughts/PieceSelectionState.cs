@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,14 +6,14 @@ namespace MonoChess_DesktopApp.Draughts
 {
     internal class PieceSelectionState : SelectionState, IDraughtsBoardState
     {
-        public PieceSelectionState(ContentManager content, DraughtsBoardView context) : base(content, context)
+        public PieceSelectionState(DraughtsBoardView context) : base(context)
         {
             _activePositions = CalculateActivePositions(context.Model.GetActivePieces());
         }
 
         protected override void OnValidSelection(Point point)
         {
-            var newState = new ActionSelectionState(_content, _context, point.GetIndex());
+            var newState = new ActionSelectionState(_context, point.GetIndex());
             _context.State = newState;
         }
 

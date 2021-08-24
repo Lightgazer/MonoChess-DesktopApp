@@ -8,15 +8,13 @@ namespace MonoChess_DesktopApp.Draughts
     internal class PieceMovementState : IDraughtsBoardState
     {
         private readonly DraughtsBoardView _context;
-        private readonly ContentManager _content;
         private readonly Stack<Move> _moves;
         private Piece _piece;
         private Move _from;
 
-        public PieceMovementState(ContentManager content, DraughtsBoardView context, Command command)
+        public PieceMovementState(DraughtsBoardView context, Command command)
         {
             _context = context;
-            _content = content;
             _moves = command.GetAllMoves();
             context.Model.Execute(command);
 
@@ -52,7 +50,7 @@ namespace MonoChess_DesktopApp.Draughts
             }
             else
             {
-                //next state transition
+                _context.StartNewTurn();
             }
         }
 
