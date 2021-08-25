@@ -43,7 +43,7 @@ namespace MonoChess_DesktopApp.Draughts
             return _currentTurn.Pieces;
         }
 
-        public IReadOnlyList<int> GetActivePieces()
+        public List<int> GetActivePieces()
         {
             return _currentTurn.GetAllowedMoves()
                 .Select(move => move.GetStartOfMovement())

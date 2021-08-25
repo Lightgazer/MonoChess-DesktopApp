@@ -36,7 +36,7 @@ namespace MonoChess_DesktopApp.Draughts
                 }
                 else
                 {
-                    var secondNeighbor = GetNeighbor(neighbor, Direction.LeftUp);
+                    var secondNeighbor = GetNeighbor(neighbor, direction);
                     if (secondNeighbor != -1 && Pieces[secondNeighbor] == PieceType.None && IsEnemy(neighbor))
                     {
                         listMoves.Add(CapturePiece(ToPosition, secondNeighbor, neighbor));

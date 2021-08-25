@@ -88,6 +88,10 @@ namespace Tests
             var active = model.GetActivePieces();
             var expected = new List<int> { 25 };
             CollectionAssert.AreEqual(active, expected);
+            var commands3 = model.GetPossibleCommands(25);
+            model.Execute(commands3[0]);
+            var positions = model.GetPiecePositions();
+            Assert.AreEqual(positions[16], PieceType.WhitePvt);
         }
     }
 }
