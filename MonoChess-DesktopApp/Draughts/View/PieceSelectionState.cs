@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MonoChess_DesktopApp.Draughts
 {
-    internal class PieceSelectionState : SelectionState, IDraughtsBoardState
+    public class PieceSelectionState : SelectionState, IDraughtsBoardState
     {
         public PieceSelectionState(DraughtsBoardView context) : base(context)
         {

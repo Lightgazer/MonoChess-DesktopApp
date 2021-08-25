@@ -8,7 +8,7 @@ namespace MonoChess_DesktopApp.Draughts
     public class Move
     {
         public int ToPosition { get; }
-        public int Capture { get; set; }
+        public int? Capture { get; set; }
         public PieceType[] Pieces { get; }
         public Move Parent { get; private set; }
         public int CaptureCount;
@@ -101,11 +101,7 @@ namespace MonoChess_DesktopApp.Draughts
         {
             var current = Pieces[ToPosition];
             var target = Pieces[index];
-            var blackSide = new[] {PieceType.WhitePvt, PieceType.WhiteKing};
-            var whiteSide = new[] {PieceType.BlackPvt, PieceType.BlackKing};
-            
-            return blackSide.Contains(current) && whiteSide.Contains(target) || 
-                   whiteSide.Contains(current) && blackSide.Contains(target);
+            return target != PieceType.None && current.GetSide() != target.GetSide();
         }
     }
 }

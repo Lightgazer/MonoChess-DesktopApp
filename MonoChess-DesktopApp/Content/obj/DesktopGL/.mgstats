@@ -1,2 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/frame.png","C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/bin/DesktopGL/frame.xnb","TextureProcessor","Texture2DContent",1280,16469,0,3484021
+"C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/black_king.png","C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/bin/DesktopGL/black_king.xnb","TextureProcessor","Texture2DContent",2287,16469,0,3307585
+"C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/white_king.png","C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/bin/DesktopGL/white_king.xnb","TextureProcessor","Texture2DContent",2538,16469,0,0036293

@@ -6,7 +6,7 @@ namespace MonoChess_DesktopApp.Draughts
     {
         public int EndPosition { get { return _endMove.ToPosition; } }
         public PieceType[] EndPieces { get { return _endMove.Pieces; } }
-        private Move _endMove;
+        private readonly Move _endMove;
 
         public Command(Move endMove)
         {

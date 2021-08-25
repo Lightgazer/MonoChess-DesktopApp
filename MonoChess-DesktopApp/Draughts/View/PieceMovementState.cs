@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MonoChess_DesktopApp.Draughts
 {
-    internal class PieceMovementState : IDraughtsBoardState
+    public class PieceMovementState : IDraughtsBoardState
     {
         private readonly DraughtsBoardView _context;
         private readonly Stack<Move> _moves;
@@ -26,14 +26,24 @@ namespace MonoChess_DesktopApp.Draughts
         public void Update(GameTime gameTime)
         {
             if (_piece.ScreenDisplacement == Vector2.Zero)
+            {
+                RemoveCaptured();
                 NextDestination();
+            }
 
             var delta = GameSettings.MovementSpeed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             _piece.ScreenDisplacement = MyMath.MoveTowards(_piece.ScreenDisplacement, Vector2.Zero, delta);
-
         }
 
         public void Draw(SpriteBatch spriteBatch) { }
+
+        private void RemoveCaptured()
+        {
+            if(_from.Capture is { } number) { 
+                var point = DraughtsBoardView.SquareNumberToPoint(number);
+                _context.RemovePieceAt(point);
+            }
+        }
 
         private void NextDestination()
         {

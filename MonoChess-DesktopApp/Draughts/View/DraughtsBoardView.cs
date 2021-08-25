@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -6,7 +7,7 @@ using MonoChess_DesktopApp.Extensions;
 
 namespace MonoChess_DesktopApp.Draughts
 {
-    internal class Piece
+    public class Piece
     {
         public Point BoardIndex;
         public Vector2 ScreenDisplacement;
@@ -15,10 +16,10 @@ namespace MonoChess_DesktopApp.Draughts
 
     public class DraughtsBoardView
     {
-        internal List<Piece> Pieces { get; private set; }
-        internal DraughtsModel Model { get; private set; }
-        internal ContentManager Content { get; private set; }
-        internal IDraughtsBoardState State { private get; set; }
+        public List<Piece> Pieces { get; private set; }
+        public DraughtsModel Model { get; private set; }
+        public ContentManager Content { get; private set; }
+        public IDraughtsBoardState State { private get; set; }
         private const int Size = DraughtsConstants.BoardSize;
         private const int RowLength = DraughtsConstants.RowLength;
         private readonly Point _position;
@@ -26,6 +27,8 @@ namespace MonoChess_DesktopApp.Draughts
         private readonly Texture2D _darkSquare;
         private readonly Texture2D _whitePiece;
         private readonly Texture2D _blackPiece;
+        private readonly Texture2D _blackPieceKing;
+        private readonly Texture2D _whitePieceKing;
 
         public static Point SquareNumberToPoint(int number)
         {
@@ -41,6 +44,8 @@ namespace MonoChess_DesktopApp.Draughts
             _lightSquare = content.Load<Texture2D>("light_square");
             _blackPiece = content.Load<Texture2D>("black_piece");
             _whitePiece = content.Load<Texture2D>("white_piece");
+            _blackPieceKing = content.Load<Texture2D>("black_king");
+            _whitePieceKing = content.Load<Texture2D>("white_king");
             _position = position;
             Content = content;
             Model = model;
@@ -66,6 +71,11 @@ namespace MonoChess_DesktopApp.Draughts
         {
             Pieces = ConvertPositions(Model.GetPiecePositions());
             State = new PieceSelectionState(this);
+        }
+
+        public void RemovePieceAt(Point point)
+        {
+            Pieces = Pieces.Where(piece => piece.BoardIndex != point).ToList();
         }
 
         public Point PointToScreenPosition(Point index) 
@@ -105,6 +115,8 @@ namespace MonoChess_DesktopApp.Draughts
                 {
                     PieceType.BlackPvt => _blackPiece,
                     PieceType.WhitePvt => _whitePiece,
+                    PieceType.WhiteKing => _whitePieceKing,
+                    PieceType.BlackKing => _blackPieceKing,
                     _ => null
                 };
                 if (texture is null) return;

@@ -10,11 +10,11 @@ namespace MonoChess_DesktopApp
     {
         public Action<Point> OnSelect;
         public Action OnCancel;
+        public Point? HoverIndex { get; private set; }
         private readonly Texture2D _texture;
         private Rectangle _target;
         private ButtonState _prevLeftButtonState;
         private ButtonState _prevRightButtonState;
-        private Point? _hoverIndex;
 
         public BoardCursor(ContentManager content, Rectangle target)
         {
@@ -25,10 +25,10 @@ namespace MonoChess_DesktopApp
         public void Update()
         {
             var mouseState = Mouse.GetState();
-            _hoverIndex = PositionToBoardIndex(mouseState.Position);
+            HoverIndex = PositionToBoardIndex(mouseState.Position);
 
             var leftButton = mouseState.LeftButton;
-            if (_hoverIndex is {} selected &&
+            if (HoverIndex is {} selected &&
                 _prevLeftButtonState == ButtonState.Released &&
                 leftButton == ButtonState.Pressed)
             {
@@ -44,7 +44,7 @@ namespace MonoChess_DesktopApp
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (_hoverIndex is { } index)
+            if (HoverIndex is { } index)
             {
                 var blockSize = GameSettings.BlockPoint;
                 var position = index * blockSize + _target.Location;

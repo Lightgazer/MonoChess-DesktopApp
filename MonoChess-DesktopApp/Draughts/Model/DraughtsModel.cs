@@ -4,8 +4,8 @@ using System.Linq;
 
 namespace MonoChess_DesktopApp.Draughts
 {
-    //TODO: нужно как-то связать енамы Turn и PieceType
     //TODO: проверка на конец игры, ничью
+    //TODO: проверка на превращение в короля
 
     public class DraughtsModel
     {
@@ -16,7 +16,7 @@ namespace MonoChess_DesktopApp.Draughts
             var pieces = new PieceType[DraughtsConstants.NumberOfPositions];
             Array.Fill(pieces, PieceType.BlackPvt, 0, 20);
             Array.Fill(pieces, PieceType.WhitePvt, 30, 20);
-            _currentTurn = new Turn(pieces, TurnSide.White);
+            _currentTurn = new Turn(pieces, Side.White);
         }
 
         public List<Command> GetPossibleCommands(int startPosition)
@@ -29,7 +29,7 @@ namespace MonoChess_DesktopApp.Draughts
 
         public void Execute(Command command)
         {
-            var nextSide = _currentTurn.Side == TurnSide.White ? TurnSide.Black : TurnSide.White;
+            var nextSide = _currentTurn.Side == Side.White ? Side.Black : Side.White;
             _currentTurn = new Turn(command.EndPieces, nextSide);
         }
 

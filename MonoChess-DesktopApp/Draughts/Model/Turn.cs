@@ -7,10 +7,10 @@ namespace MonoChess_DesktopApp.Draughts
     internal class Turn
     {
         public readonly PieceType[] Pieces;
-        public readonly TurnSide Side;
+        public readonly Side Side;
         private List<Move> _allowedMoves;
 
-        public Turn(PieceType[] pieces, TurnSide side)
+        public Turn(PieceType[] pieces, Side side)
         {
             Side = side;
             Pieces = pieces;
@@ -26,8 +26,8 @@ namespace MonoChess_DesktopApp.Draughts
         {
             var currentTurnPieces = Side switch
             {
-                TurnSide.White => SelectPieceIndexes(new[] { PieceType.WhitePvt, PieceType.WhiteKing }),
-                TurnSide.Black => SelectPieceIndexes(new[] { PieceType.BlackPvt, PieceType.BlackKing }),
+                Side.White => SelectPieceIndexes(new[] { PieceType.WhitePvt, PieceType.WhiteKing }),
+                Side.Black => SelectPieceIndexes(new[] { PieceType.BlackPvt, PieceType.BlackKing }),
                 _ => throw new ArgumentOutOfRangeException()
             };
             var movesList = currentTurnPieces
