@@ -8,7 +8,6 @@ namespace MonoChess_DesktopApp.Draughts
     public class Move
     {
         public int ToPosition { get; }
-        public int? Capture { get; set; }
         public PieceType[] Pieces { get; }
         public Move Parent { get; private set; }
         public int CaptureCount;
@@ -93,7 +92,7 @@ namespace MonoChess_DesktopApp.Draughts
             nextPieces[to] = piece;
             return new Move(to, nextPieces, false)
             {
-                Parent = this, CaptureCount = CaptureCount + 1, Capture = target
+                Parent = this, CaptureCount = CaptureCount + 1
             };
         }
 
