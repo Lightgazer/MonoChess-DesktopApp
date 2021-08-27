@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -27,7 +26,6 @@ namespace MonoChess_DesktopApp.Draughts
         {
             if (_piece.ScreenDisplacement == Vector2.Zero)
             {
-                RemoveCaptured();
                 NextDestination();
             }
 
@@ -36,14 +34,6 @@ namespace MonoChess_DesktopApp.Draughts
         }
 
         public void Draw(SpriteBatch spriteBatch) { }
-
-        private void RemoveCaptured()
-        {
-            if(_from.Capture is { } number) { 
-                var point = DraughtsBoardView.SquareNumberToPoint(number);
-                _context.RemovePieceAt(point);
-            }
-        }
 
         private void NextDestination()
         {

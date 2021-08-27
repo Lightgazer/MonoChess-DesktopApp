@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace MonoChess_DesktopApp.Draughts
@@ -24,13 +23,8 @@ namespace MonoChess_DesktopApp.Draughts
 
         private List<Move> CalculateAllowedMoves()
         {
-            var currentTurnPieces = Side switch
-            {
-                Side.White => SelectPieceIndexes(new[] { PieceType.WhitePvt, PieceType.WhiteKing }),
-                Side.Black => SelectPieceIndexes(new[] { PieceType.BlackPvt, PieceType.BlackKing }),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-            var movesList = currentTurnPieces
+            var currentSidePieces = SelectPieceIndexes(Side);
+            var movesList = currentSidePieces
                 .Select(index => new Move(index, Pieces, false))
                 .ToList();
 
@@ -51,9 +45,9 @@ namespace MonoChess_DesktopApp.Draughts
                 .ToList();
         }
 
-        private int[] SelectPieceIndexes(PieceType[] types) =>
+        private int[] SelectPieceIndexes(Side side) =>
             Enumerable.Range(0, Pieces.Length)
-                .Where(i => types.Contains(Pieces[i]))
+                .Where(i => Pieces[i].GetSide() == side)
                 .ToArray();
     }
 }
