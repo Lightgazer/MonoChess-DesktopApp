@@ -1,7 +1,8 @@
 using System.Linq;
 using System.Collections.Generic;
 using NUnit.Framework;
-using MonoChess_DesktopApp.Draughts;
+using MonoChess_DesktopApp.Draughts.Model;
+using MonoChess_DesktopApp.Draughts.Enums;
 
 namespace Tests
 {

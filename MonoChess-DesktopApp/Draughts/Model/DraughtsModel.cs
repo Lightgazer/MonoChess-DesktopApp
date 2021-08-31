@@ -1,8 +1,9 @@
-﻿using System;
+﻿using MonoChess_DesktopApp.Draughts.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MonoChess_DesktopApp.Draughts
+namespace MonoChess_DesktopApp.Draughts.Model
 {
     //TODO: проверка на конец игры, ничью
     //TODO: проверка на превращение в короля

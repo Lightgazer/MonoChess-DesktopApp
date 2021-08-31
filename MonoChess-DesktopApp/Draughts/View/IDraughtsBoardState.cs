@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoChess_DesktopApp.Draughts
+namespace MonoChess_DesktopApp.Draughts.View
 {
     public interface IDraughtsBoardState
     {

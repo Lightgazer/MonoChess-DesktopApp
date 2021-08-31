@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using MonoChess_DesktopApp.Draughts.Enums;
+using MonoChess_DesktopApp.Draughts.Model;
+using System.Collections.Generic;
 
 namespace MonoChess_DesktopApp.Draughts
 {
     public class Command
     {
-        public int EndPosition { get { return _endMove.ToPosition; } }
-        public PieceType[] EndPieces { get { return _endMove.Pieces; } }
+        public int EndPosition => _endMove.ToPosition;
+        public PieceType[] EndPieces => _endMove.Pieces;
         private readonly Move _endMove;
 
         public Command(Move endMove)

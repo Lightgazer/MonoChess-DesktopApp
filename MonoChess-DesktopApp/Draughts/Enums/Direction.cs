@@ -1,6 +1,6 @@
-﻿namespace MonoChess_DesktopApp.Draughts
+﻿namespace MonoChess_DesktopApp.Draughts.Enums
 {
-    internal enum Direction
+    public enum Direction
     {
         LeftUp,
         LeftDown,

@@ -3,9 +3,11 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoChess_DesktopApp.Draughts.Enums;
+using MonoChess_DesktopApp.Draughts.Model;
 using MonoChess_DesktopApp.Extensions;
 
-namespace MonoChess_DesktopApp.Draughts
+namespace MonoChess_DesktopApp.Draughts.View
 {
     public class Piece
     {

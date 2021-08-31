@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 
-namespace MonoChess_DesktopApp.Draughts
+namespace MonoChess_DesktopApp.Draughts.View
 {
     abstract public class SelectionState
     {

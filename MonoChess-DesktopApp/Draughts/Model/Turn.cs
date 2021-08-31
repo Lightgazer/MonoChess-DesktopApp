@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using MonoChess_DesktopApp.Draughts.Enums;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace MonoChess_DesktopApp.Draughts
+namespace MonoChess_DesktopApp.Draughts.Model
 {
     internal class Turn
     {
@@ -21,11 +22,23 @@ namespace MonoChess_DesktopApp.Draughts
             return _allowedMoves = CalculateAllowedMoves();
         }
 
+        private Move CreateMove(int index)
+        {
+            var type = Pieces[index];
+            return type switch {
+                PieceType.BlackPvt => new PvtMove(index, Pieces, false),
+                PieceType.BlackKing => new KingMove(index, Pieces, false),
+                PieceType.WhitePvt => new PvtMove(index, Pieces, false),
+                PieceType.WhiteKing => new KingMove(index, Pieces, false),
+                _ => null
+            };
+        }
+
         private List<Move> CalculateAllowedMoves()
         {
             var currentSidePieces = SelectPieceIndexes(Side);
             var movesList = currentSidePieces
-                .Select(index => new Move(index, Pieces, false))
+                .Select(index => CreateMove(index))
                 .ToList();
 
             while (true)

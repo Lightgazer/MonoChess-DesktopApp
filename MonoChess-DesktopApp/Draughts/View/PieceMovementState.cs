@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoChess_DesktopApp.Draughts.Model;
 using System.Collections.Generic;
 
-namespace MonoChess_DesktopApp.Draughts
+namespace MonoChess_DesktopApp.Draughts.View
 {
     public class PieceMovementState : IDraughtsBoardState
     {

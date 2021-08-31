@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MonoChess_DesktopApp.Draughts
+namespace MonoChess_DesktopApp.Draughts.View
 {
     public class ActionSelectionState : SelectionState, IDraughtsBoardState
     {

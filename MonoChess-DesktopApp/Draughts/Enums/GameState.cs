@@ -1,4 +1,4 @@
-﻿namespace MonoChess_DesktopApp.Draughts
+﻿namespace MonoChess_DesktopApp.Draughts.Enums
 {
     public enum GameState
     {

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoChess_DesktopApp.Draughts.Model;
+using MonoChess_DesktopApp.Draughts.View;
 
 namespace MonoChess_DesktopApp.Draughts
 {
@@ -11,7 +13,6 @@ namespace MonoChess_DesktopApp.Draughts
         private readonly ContentManager _content;
 
         private DraughtsBoardView _boardView;
-        private DraughtsModel _model;
 
         public DraughtsScene(ContentManager content)
         {
@@ -21,9 +22,9 @@ namespace MonoChess_DesktopApp.Draughts
         public void Start()
         {
             const int boardPx = DraughtsConstants.BoardSize * GameSettings.BlockSize;
-            _model = new DraughtsModel();
+            var model = new DraughtsModel();
             var position = new Point((GameSettings.Width - boardPx) / 2, (GameSettings.Height - boardPx) / 2);
-            _boardView = new DraughtsBoardView(_content, _model, position);
+            _boardView = new DraughtsBoardView(_content, model, position);
         }
         
         public void Stop() {}
