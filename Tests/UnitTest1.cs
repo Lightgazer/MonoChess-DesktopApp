@@ -1,8 +1,10 @@
-using System.Linq;
-using System.Collections.Generic;
-using NUnit.Framework;
-using MonoChess_DesktopApp.Draughts.Model;
+using MonoChess_DesktopApp.Draughts;
 using MonoChess_DesktopApp.Draughts.Enums;
+using MonoChess_DesktopApp.Draughts.Model;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Tests
 {
@@ -24,7 +26,7 @@ namespace Tests
         {
             var model = new DraughtsModel();
             var active = model.GetActivePieces();
-            var expected = new List<int> {30, 31, 32, 33, 34};
+            var expected = new List<int> { 30, 31, 32, 33, 34 };
             CollectionAssert.AreEqual(active, expected);
         }
 
@@ -93,6 +95,22 @@ namespace Tests
             model.Execute(commands3[0]);
             var positions = model.GetPiecePositions();
             Assert.AreEqual(positions[16], PieceType.WhitePvt);
+        }
+
+        public void CrowningPiece()
+        {
+            var pieces = new PieceType[DraughtsConstants.NumberOfPositions];
+            Array.Fill(pieces, PieceType.BlackPvt, 0, 20);
+            Array.Fill(pieces, PieceType.WhitePvt, 30, 20);
+            pieces[1] = PieceType.None;
+            pieces[10] = PieceType.WhitePvt;
+
+            var model = new DraughtsModel(new Turn(pieces, Side.White));
+            var active = model.GetActivePieces();
+            var commands = model.GetPossibleCommands(active[0]);
+            model.Execute(commands[0]);
+            var positions = model.GetPiecePositions();
+            Assert.AreEqual(positions[1], PieceType.WhiteKing);
         }
     }
 }

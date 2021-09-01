@@ -28,20 +28,27 @@ namespace MonoChess_DesktopApp.Draughts.Model
 
         private void AddCaptureMoves(List<Move> listMoves, Direction direction)
         {
-            int enemy = GetNearestEnemy(direction);
-            int neighbor = GetNeighbor(enemy, direction);
-            while (neighbor != -1 && Pieces[neighbor] == PieceType.None)
+            if (GetNearestEnemy(direction) is { } enemy)
             {
-                listMoves.Add(CapturePiece(ToPosition, neighbor, enemy));
-                neighbor = GetNeighbor(neighbor, direction);
+                int neighbor = GetNeighbor(enemy, direction);
+                while (neighbor != -1 && Pieces[neighbor] == PieceType.None)
+                {
+                    listMoves.Add(CapturePiece(ToPosition, neighbor, enemy));
+                    neighbor = GetNeighbor(neighbor, direction);
+                }
             }
         }
 
-        private int GetNearestEnemy(Direction direction)
+        private int? GetNearestEnemy(Direction direction)
         {
             int neighbor = ToPosition;
-            do neighbor = GetNeighbor(neighbor, direction); while (neighbor != -1 || !IsEnemy(neighbor));
-            return neighbor;
+            while (true)
+            {
+                neighbor = GetNeighbor(neighbor, direction);
+                if (neighbor == -1) return null;
+                if (IsEnemy(neighbor)) return neighbor;
+                if (Pieces[neighbor] != PieceType.None) return null;
+            }
         }
     }
 }

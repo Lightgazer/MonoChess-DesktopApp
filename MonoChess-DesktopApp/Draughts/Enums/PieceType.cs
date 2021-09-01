@@ -6,7 +6,8 @@
         WhitePvt,
         BlackPvt,
         WhiteKing,
-        BlackKing
+        BlackKing,
+        Captured
     }
 
     public static class SideHelper

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoChess_DesktopApp.Draughts.Model;
 using System.Collections.Generic;
 using System.Linq;
 

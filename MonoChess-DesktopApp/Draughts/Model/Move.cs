@@ -66,9 +66,8 @@ namespace MonoChess_DesktopApp.Draughts.Model
         protected Move MovePiece(int from, int to)
         {
             var nextPieces = (PieceType[])Pieces.Clone();
-            var piece = nextPieces[from];
+            nextPieces[to] = nextPieces[from];
             nextPieces[from] = PieceType.None;
-            nextPieces[to] = piece;
             var nextMove = CreateNextMove(to, nextPieces, true);
             nextMove.Parent = this;
             return nextMove;
@@ -77,10 +76,9 @@ namespace MonoChess_DesktopApp.Draughts.Model
         protected Move CapturePiece(int from, int to, int target)
         {
             var nextPieces = (PieceType[])Pieces.Clone();
-            var piece = nextPieces[from];
+            nextPieces[to] = nextPieces[from];
             nextPieces[from] = PieceType.None;
-            nextPieces[target] = PieceType.None;
-            nextPieces[to] = piece;
+            nextPieces[target] = PieceType.Captured;
             var nextMove = CreateNextMove(to, nextPieces, false);
             nextMove.Parent = this;
             nextMove.CaptureCount = CaptureCount + 1;
@@ -91,7 +89,7 @@ namespace MonoChess_DesktopApp.Draughts.Model
         {
             var current = Pieces[ToPosition];
             var target = Pieces[index];
-            return target != PieceType.None && current.GetSide() != target.GetSide();
+            return target != PieceType.None && target != PieceType.Captured && current.GetSide() != target.GetSide();
         }
 
         protected abstract Move CreateNextMove(int position, PieceType[] pieces, bool endFlag);

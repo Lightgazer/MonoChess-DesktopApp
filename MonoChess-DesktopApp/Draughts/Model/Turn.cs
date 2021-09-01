@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MonoChess_DesktopApp.Draughts.Model
 {
-    internal class Turn
+    public class Turn
     {
         public readonly PieceType[] Pieces;
         public readonly Side Side;

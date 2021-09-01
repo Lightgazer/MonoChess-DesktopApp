@@ -6,7 +6,6 @@ using System.Linq;
 namespace MonoChess_DesktopApp.Draughts.Model
 {
     //TODO: проверка на конец игры, ничью
-    //TODO: проверка на превращение в короля
 
     public class DraughtsModel
     {
@@ -17,7 +16,17 @@ namespace MonoChess_DesktopApp.Draughts.Model
             var pieces = new PieceType[DraughtsConstants.NumberOfPositions];
             Array.Fill(pieces, PieceType.BlackPvt, 0, 20);
             Array.Fill(pieces, PieceType.WhitePvt, 30, 20);
+
+            //pieces[10] = PieceType.WhitePvt;
+            //pieces[1] = PieceType.None;
+            //pieces[15] = PieceType.None;
+
             _currentTurn = new Turn(pieces, Side.White);
+        }
+
+        public DraughtsModel(Turn turn)
+        {
+            _currentTurn = turn;
         }
 
         public List<Command> GetPossibleCommands(int startPosition)
@@ -31,7 +40,8 @@ namespace MonoChess_DesktopApp.Draughts.Model
         public void Execute(Command command)
         {
             var nextSide = _currentTurn.Side == Side.White ? Side.Black : Side.White;
-            _currentTurn = new Turn(command.EndPieces, nextSide);
+            var nextPieces = command.GetResultPieces();
+            _currentTurn = new Turn(nextPieces, nextSide);
         }
 
         public GameState GetGameState()
