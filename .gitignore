@@ -1,2 +1,7 @@
 ﻿/MonoChess-DesktopApp/bin/*
 /MonoChess-DesktopApp/obj/*
+.vs
+.vs/slnx.sqlite
+.vs/MonoChess-DesktopApp/DesignTimeBuild/.dtbcache.v2
+.vs/MonoChess-DesktopApp/v16/.suo
+.vs/MonoChess-DesktopApp/v16/TestStore/0/testlog.manifest

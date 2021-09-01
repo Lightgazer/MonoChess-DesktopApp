@@ -23,6 +23,7 @@ namespace MonoChess_DesktopApp.Draughts.Model
             while (neighbor != -1 && Pieces[neighbor] == PieceType.None)
             {
                 listMoves.Add(MovePiece(ToPosition, neighbor));
+                neighbor = GetNeighbor(neighbor, direction);
             }
         }
 
