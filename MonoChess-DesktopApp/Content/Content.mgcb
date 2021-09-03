@@ -85,6 +85,18 @@
 /processorParam:TextureFormat=Color
 /build:light_square.png
 
+#begin marker.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:marker.png
+
 #begin white_king.png
 /importer:TextureImporter
 /processor:TextureProcessor

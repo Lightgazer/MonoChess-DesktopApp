@@ -25,10 +25,11 @@ namespace MonoChess_DesktopApp.Draughts.Model
         private Move CreateMove(int index)
         {
             var type = Pieces[index];
-            return type switch {
+            return type switch
+            {
                 PieceType.BlackPvt => new PvtMove(index, Pieces, false),
-                PieceType.BlackKing => new KingMove(index, Pieces, false),
                 PieceType.WhitePvt => new PvtMove(index, Pieces, false),
+                PieceType.BlackKing => new KingMove(index, Pieces, false),
                 PieceType.WhiteKing => new KingMove(index, Pieces, false),
                 _ => null
             };

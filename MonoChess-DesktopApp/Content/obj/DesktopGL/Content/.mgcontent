@@ -10,10 +10,12 @@
     <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/dark_square.png</File>
     <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/frame.png</File>
     <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/light_square.png</File>
+    <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/marker.png</File>
     <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/white_king.png</File>
     <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/white_piece.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

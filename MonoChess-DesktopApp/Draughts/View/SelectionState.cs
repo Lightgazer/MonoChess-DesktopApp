@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace MonoChess_DesktopApp.Draughts.View
 {
-    abstract public class SelectionState
+    abstract public class SelectionState : IDraughtsBoardState
     {
         protected readonly DraughtsBoardView _context;
         protected readonly BoardCursor _cursor;

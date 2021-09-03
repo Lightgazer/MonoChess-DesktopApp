@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace MonoChess_DesktopApp.Draughts.View
 {
-    public class ActionSelectionState : SelectionState, IDraughtsBoardState
+    public class ActionSelectionState : SelectionState
     {
         private List<Command> _commands;
 
