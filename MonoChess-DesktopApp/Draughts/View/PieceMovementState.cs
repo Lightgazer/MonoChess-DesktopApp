@@ -46,7 +46,7 @@ namespace MonoChess_DesktopApp.Draughts.View
                 var indexDisplacement = startPosition - targetPosition;
 
                 _piece.BoardIndex = targetPosition;
-                _piece.ScreenDisplacement = indexToScreenDisplacement(indexDisplacement);
+                _piece.ScreenDisplacement = DraughtsBoardView.PointToScreenDisplacement(indexDisplacement);
                 _from = move;
             }
             else
@@ -54,8 +54,5 @@ namespace MonoChess_DesktopApp.Draughts.View
                 _context.StartNewTurn();
             }
         }
-
-        private Vector2 indexToScreenDisplacement(Point index)
-            => (GameSettings.BlockPoint * index).ToVector2();
     }
 }

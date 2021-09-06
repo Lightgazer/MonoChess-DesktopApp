@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 
@@ -30,8 +29,10 @@ namespace MonoChess_DesktopApp.Draughts.View
         {
             DrawActivePositions(spriteBatch);
             _cursor.Draw(spriteBatch);
+            if(_cursor.HoverIndex is { } index && _activePositions.Contains(index)) DrawOnHoverSelection(spriteBatch, index);
         }
 
+        protected abstract void DrawOnHoverSelection(SpriteBatch spriteBatch, Point index);
         protected abstract void OnValidSelection(Point point);
 
         private void OnSelect(Point point)

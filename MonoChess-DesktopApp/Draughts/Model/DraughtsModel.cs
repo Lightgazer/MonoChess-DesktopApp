@@ -17,9 +17,9 @@ namespace MonoChess_DesktopApp.Draughts.Model
             Array.Fill(pieces, PieceType.BlackPvt, 0, 20);
             Array.Fill(pieces, PieceType.WhitePvt, 30, 20);
 
-            //pieces[10] = PieceType.WhitePvt;
-            //pieces[1] = PieceType.None;
-            //pieces[15] = PieceType.None;
+            pieces[10] = PieceType.WhitePvt;
+            pieces[1] = PieceType.None;
+            pieces[15] = PieceType.None;
 
             _currentTurn = new Turn(pieces, Side.White);
         }
