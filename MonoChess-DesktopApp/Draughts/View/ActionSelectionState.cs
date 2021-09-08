@@ -33,7 +33,8 @@ namespace MonoChess_DesktopApp.Draughts.View
             foreach(var move in moves)
             {
                 var to = move.ToPosition;
-                spriteBatch.Draw(_marker, DraughtsBoardView.SquareNumberToScreenDisplacement(from) + _context.Position.ToVector2(), Color.White);
+                CalculateMarkerPositions(from, to)
+                    .ForEach(point => spriteBatch.Draw(_marker, DraughtsBoardView.PointToScreenDisplacement(point) + _context.Position.ToVector2(), Color.White));
                 from = to;
             }
         }
@@ -46,13 +47,13 @@ namespace MonoChess_DesktopApp.Draughts.View
             var diff = to - from;
             var direction = new Point(diff.X > 0 ? 1 : -1, diff.Y > 0 ? 1 : -1); 
             var list = new List<Point>();
-            if (from == to) return list;
-            
-            do
+            Point next = to - direction;
+            list.Add(from);
+            while (next != from)
             {
-                var next = to - direction;
                 list.Add(next);
-            } while (next != from);
+                next -= direction;
+            }
             return list;
         }
 
