@@ -97,6 +97,7 @@ namespace Tests
             Assert.AreEqual(positions[16], PieceType.WhitePvt);
         }
 
+        [Test]
         public void CrowningPiece()
         {
             var pieces = new PieceType[DraughtsConstants.NumberOfPositions];
@@ -111,6 +112,20 @@ namespace Tests
             model.Execute(commands[0]);
             var positions = model.GetPiecePositions();
             Assert.AreEqual(positions[1], PieceType.WhiteKing);
+        }
+
+        [Test]
+        public void KingMoves()
+        {
+            var pieces = new PieceType[DraughtsConstants.NumberOfPositions];
+            pieces[8] = PieceType.BlackPvt;
+            pieces[17] = PieceType.BlackPvt;
+            pieces[21] = PieceType.WhiteKing;
+            var model = new DraughtsModel(new Turn(pieces, Side.White));
+            var active = model.GetActivePieces();
+            var commands = model.GetPossibleCommands(active[0]);
+            Assert.AreEqual(commands.Count, 1);
+            Assert.AreEqual(commands[0].EndPosition, 3);
         }
     }
 }
