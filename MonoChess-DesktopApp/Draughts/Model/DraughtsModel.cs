@@ -46,6 +46,17 @@ namespace MonoChess_DesktopApp.Draughts.Model
 
         public GameState GetGameState()
         {
+            if(_currentTurn.GetAllowedMoves().Count == 0)
+            {
+                return _currentTurn.Side switch
+                {
+                    Side.White => GameState.BlackWin,
+                    Side.Black => GameState.WhiteWin,
+                    _ => GameState.None
+                };
+            }
+            //The game is considered a draw when the same position repeats itself for the third time (not necessarily consecutive), with the same player having the move each time.
+            //A king-versus-king endgame is automatically declared a draw, as is any other position proven to be a draw.
             return GameState.Ongoing;
         }
 
