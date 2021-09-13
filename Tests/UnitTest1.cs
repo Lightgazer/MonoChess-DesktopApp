@@ -127,5 +127,27 @@ namespace Tests
             Assert.AreEqual(commands.Count, 1);
             Assert.AreEqual(commands[0].EndPosition, 3);
         }
+
+        [Test]
+        public void SimpleWin()
+        {
+            var pieces = new PieceType[DraughtsConstants.NumberOfPositions];
+            pieces[30] = PieceType.WhitePvt;
+            pieces[26] = PieceType.BlackPvt;
+            var model = new DraughtsModel(new Turn(pieces, Side.White));
+            var commands = model.GetPossibleCommands(30);
+            model.Execute(commands[0]);
+            Assert.AreEqual(model.GetGameState(), GameState.WhiteWin);
+        }
+
+        [Test]
+        public void KingDraw()
+        {
+            var pieces = new PieceType[DraughtsConstants.NumberOfPositions];
+            pieces[0] = PieceType.WhiteKing;
+            pieces[1] = PieceType.BlackKing;
+            var model = new DraughtsModel(new Turn(pieces, Side.White));
+            Assert.AreEqual(model.GetGameState(), GameState.Draw);
+        }
     }
 }

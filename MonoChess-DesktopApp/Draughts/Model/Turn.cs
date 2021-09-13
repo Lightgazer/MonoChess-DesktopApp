@@ -8,18 +8,13 @@ namespace MonoChess_DesktopApp.Draughts.Model
     {
         public readonly PieceType[] Pieces;
         public readonly Side Side;
-        private List<Move> _allowedMoves;
+        public readonly List<Move> AllowedMoves;
 
         public Turn(PieceType[] pieces, Side side)
         {
             Side = side;
             Pieces = pieces;
-        }
-
-        public List<Move> GetAllowedMoves()
-        {
-            if (_allowedMoves is { }) return _allowedMoves;
-            return _allowedMoves = CalculateAllowedMoves();
+            AllowedMoves = CalculateAllowedMoves();
         }
 
         private Move CreateMove(int index)
@@ -41,6 +36,8 @@ namespace MonoChess_DesktopApp.Draughts.Model
             var movesList = currentSidePieces
                 .Select(index => CreateMove(index))
                 .ToList();
+
+            if (movesList.Count == 0) return new List<Move>();
 
             while (true)
             {
