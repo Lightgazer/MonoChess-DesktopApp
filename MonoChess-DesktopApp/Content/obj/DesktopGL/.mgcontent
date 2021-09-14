@@ -9,6 +9,10 @@
     <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/cursor.png</File>
     <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/dark_square.png</File>
     <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/frame.png</File>
+    <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/labels/Black Win.png</File>
+    <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/labels/Draw.png</File>
+    <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/labels/OK.png</File>
+    <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/labels/White Win.png</File>
     <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/light_square.png</File>
     <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/marker.png</File>
     <File>C:/Users/pavlyk/RiderProjects/MonoChess-DesktopApp/MonoChess-DesktopApp/Content/white_king.png</File>
@@ -20,6 +24,10 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
+    <File>labels/black_win.png</File>
+    <File>labels/draw.png</File>
+    <File>labels/ok.png</File>
+    <File>labels/white_win.png</File>
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

@@ -19,9 +19,9 @@ namespace MonoChess_DesktopApp.Draughts.View
     public class DraughtsBoardView
     {
         public List<Piece> Pieces { get; private set; }
-        public DraughtsModel Model { get; private set; }
-        public ContentManager Content { get; private set; }
         public IDraughtsBoardState State { private get; set; }
+        public readonly DraughtsModel Model;
+        public readonly ContentManager Content;
         public readonly Point Position;
         private const int Size = DraughtsConstants.BoardSize;
         private const int RowLength = DraughtsConstants.RowLength;
@@ -43,7 +43,7 @@ namespace MonoChess_DesktopApp.Draughts.View
         public static Vector2 PointToScreenDisplacement(Point index)
             => (GameSettings.BlockPoint * index).ToVector2();
 
-        public static Vector2 SquareNumberToScreenDisplacement(int number) 
+        public static Vector2 SquareNumberToScreenDisplacement(int number)
             => PointToScreenDisplacement(SquareNumberToPoint(number));
 
         public DraughtsBoardView(ContentManager content, DraughtsModel model, Point position)
@@ -78,7 +78,13 @@ namespace MonoChess_DesktopApp.Draughts.View
         public void StartNewTurn()
         {
             Pieces = ConvertPositions(Model.GetPiecePositions());
-            State = new PieceSelectionState(this);
+            var gameState = Model.GetGameState();
+            if (gameState == GameState.Ongoing)
+            {
+                State = new PieceSelectionState(this);
+                return;
+            }
+            State = new EndState(this, gameState);
         }
 
         public void RemovePieceAt(Point point)
@@ -86,7 +92,7 @@ namespace MonoChess_DesktopApp.Draughts.View
             Pieces = Pieces.Where(piece => piece.BoardIndex != point).ToList();
         }
 
-        public Point PointToScreenPosition(Point index) 
+        public Point PointToScreenPosition(Point index)
             => Position + GameSettings.BlockPoint * index;
 
         private static List<Piece> ConvertPositions(IReadOnlyList<PieceType> positions)
@@ -118,7 +124,8 @@ namespace MonoChess_DesktopApp.Draughts.View
 
         private void DrawPieces(SpriteBatch spriteBatch)
         {
-            Pieces.ForEach(piece => {
+            Pieces.ForEach(piece =>
+            {
                 var texture = piece.Type switch
                 {
                     PieceType.BlackPvt => _blackPiece,

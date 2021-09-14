@@ -57,8 +57,8 @@ namespace MonoChess_DesktopApp.Draughts.Model
                     _ => GameState.None
                 };
             }
-            // The game is considered a draw when the same position repeats itself for the third time (not necessarily consecutive),
-            // with the same player having the move each time.
+            // The game is considered a draw when the same position repeats itself for the third time
+            // (not necessarily consecutive), with the same player having the move each time.
             var repeatCount = _turnHistory
                 .FindAll(turn => _currentTurn.Side == turn.Side)
                 .FindAll(turn => _currentTurn.Pieces.SequenceEqual(turn.Pieces))
